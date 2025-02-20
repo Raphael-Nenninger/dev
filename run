@@ -36,17 +36,19 @@ find "$ENV_DIR" -type f | while read -r file; do
 done
 
 # Alle Skripte im 'runs' Verzeichnis ausführen
-#echo "Führe Skripte in '$RUNS_DIR' aus..."
+echo "Führe Skripte in '$RUNS_DIR' aus..."
 
-#for run_script in "$RUNS_DIR"/*; do
+for run_script in "$RUNS_DIR"/*; do
     # Sicherstellen, dass es eine Datei ist und sie ausführbar ist
-#    if [[ -f "$run_script" && -x "$run_script" ]]; then
-#        echo "Führe '$run_script' aus..."
-#        bash "$run_script"
-#    else
-#        echo "Die Datei '$run_script' ist keine ausführbare Datei oder nicht vorhanden."
-#   fi
-#done
+    if [[ -f "$run_script" && -x "$run_script" ]]; then
+        echo "Führe '$run_script' aus..."
+        bash "$run_script"
+    else
+        echo "Die Datei '$run_script' ist keine ausführbare Datei oder nicht vorhanden."
+   fi
+done
+
+cp -r dev ~/
 
 echo "Alle Aufgaben abgeschlossen."
 
