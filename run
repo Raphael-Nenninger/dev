@@ -48,7 +48,7 @@ for run_script in "$RUNS_DIR"/*; do
    fi
 done
 
-cp -r dev ~/
+cp -r bin/ ~/
 
 echo "Alle Aufgaben abgeschlossen."
 
