@@ -1,0 +1,52 @@
+#!/usr/bin/bash
+
+# Verzeichnisse definieren
+RUNS_DIR="runs"
+ENV_DIR="env"
+
+# Überprüfen, ob die Verzeichnisse existieren
+#if [[ ! -d "$RUNS_DIR" ]]; then
+#   echo "Der Ordner '$RUNS_DIR' existiert nicht."
+#    exit 1
+#fi
+
+if [[ ! -d "$ENV_DIR" ]]; then
+    echo "Der Ordner '$ENV_DIR' existiert nicht."
+    exit 1
+fi
+
+# Dotfiles und Konfigurationsdateien verschieben
+echo "Verschiebe Dotfiles und Konfigurationsdateien..."
+
+find "$ENV_DIR" -type f | while read -r file; do
+    # Relativen Pfad zum ENV_DIR ermitteln
+    rel_path="${file#"$ENV_DIR"/}"
+    target="$HOME/$rel_path"
+
+    # Verzeichnisstruktur im Zielverzeichnis erstellen
+    mkdir -p "$(dirname "$target")"
+
+    # Datei nur verschieben, wenn sie nicht bereits existiert
+    if [[ ! -e "$target" ]]; then
+        echo "Verschiebe '$file' nach '$target'"
+        mv "$file" "$target"
+    else
+        echo "Die Datei '$target' existiert bereits. Überspringe das Verschieben."
+    fi
+done
+
+# Alle Skripte im 'runs' Verzeichnis ausführen
+#echo "Führe Skripte in '$RUNS_DIR' aus..."
+
+#for run_script in "$RUNS_DIR"/*; do
+    # Sicherstellen, dass es eine Datei ist und sie ausführbar ist
+#    if [[ -f "$run_script" && -x "$run_script" ]]; then
+#        echo "Führe '$run_script' aus..."
+#        bash "$run_script"
+#    else
+#        echo "Die Datei '$run_script' ist keine ausführbare Datei oder nicht vorhanden."
+#   fi
+#done
+
+echo "Alle Aufgaben abgeschlossen."
+

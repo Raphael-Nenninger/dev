@@ -1,0 +1,5 @@
+#!/usr/bin/sh
+
+sudo apt-get install build-essential gcc g++ valgrind gdb make cmake
+sudo apt-get install openjdk-17-jre openjdk-17-jdk visualvm
+sudo apt-get install googletest libgtest-dev libsfml-dev libsdl2-dev

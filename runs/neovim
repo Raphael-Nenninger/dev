@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+
+# Neovim herunterladen
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+
+# Vorherige Installation entfernen
+sudo rm -rf /opt/nvim
+
+# Neovim entpacken
+sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+
+# Pfad zur .zshrc hinzufügen, falls nicht vorhanden
+if ! grep -q 'export PATH="$PATH:/opt/nvim-linux-x86_64/bin"' ~/.zshrc; then
+    echo 'export PATH="$PATH:/opt/nvim-linux-x86_64/bin"' >> ~/.zshrc
+fi
+
+# .zshrc neu laden
+source ~/.zshrc
+
+rm nvim-linux-x86_64.tar.gz 

@@ -1,0 +1,3 @@
+#!/usr/bin/sh
+
+sudo apt-get install texlive texlive-bibtex-extra texlive-extra-utils texlive-humanities texlive-lang-german texlive-publishers texmaker

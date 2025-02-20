@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -e  # Stop on error
+
+# Update package list
+sudo apt update && sudo apt upgrade -y
+
+# Install required dependencies
+sudo apt install -y build-essential cmake pkg-config libssl-dev libclang-dev curl
+
+# Install Rust via rustup
+if ! command -v rustc &> /dev/null; then
+    echo "Installing Rust..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    source $HOME/.cargo/env
+else
+    echo "Rust is already installed!"
+fi
+
+# Add Rust tools
+rustup component add rust-analyzer clippy rustfmt
+
+# Install Cargo utilities
+cargo install cargo-edit cargo-watch
+
+# Verify installation
+rustc --version
+cargo --version
+
+echo "Rust installation completed successfully!"
+
