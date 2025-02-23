@@ -1,28 +1,45 @@
-#!/usr/bin/bash
+#!/usr/bin/bash 
 
-# Verzeichnisse definieren
-RUNS_DIR="runs"
-ENV_DIR="env"
+function execute_scripts_in_directory {
+    local DIR="$1"
+    if [ -d "$DIR" ]; then
+        echo "Installiere Skripte in: $DIR"
 
-# Alle Skripte im 'runs' Verzeichnis ausführen
-echo "Führe Skripte in '$RUNS_DIR' aus..."
-
-for run_script in "$RUNS_DIR"/*; do
-    # Sicherstellen, dass es eine Datei ist und sie ausführbar ist
-    if [[ -f "$run_script" && -x "$run_script" ]]; then
-        echo "Führe '$run_script' aus..."
-        bash "$run_script"
+        # Alle ausführbaren Dateien im Verzeichnis finden und ausführen
+        for SCRIPT in "$DIR"/*; do
+            if [ -f "$SCRIPT" ] && [ -x "$SCRIPT" ]; then
+                echo "Starte: $SCRIPT"
+                "$SCRIPT"  # Skript ausführen
+            else
+                echo "Überspringe (nicht ausführbar): $SCRIPT"
+            fi
+        done
     else
-        echo "Die Datei '$run_script' ist keine ausführbare Datei oder nicht vorhanden."
-   fi
-done
+        echo "Verzeichnis existiert nicht: $DIR"
+    fi
+}
 
-cp -r bin/ ~/
 
-# Dotfiles und Konfigurationsdateien verschieben
-echo "Verschiebe Dotfiles und Konfigurationsdateien..."
+function execute_all_scripts {
+    local RUNS_DIR="runs"
 
-find "$ENV_DIR" -type f | while read -r file; do
+    for DIR in "RUNS_DIR"/*; do
+        execute_script_in_directory "$DIR"
+    done
+}
+
+function execute_scripts_in_selected_directory {
+    local RUNS_DIR="runs"
+    local SELECTION="$1"
+
+    local TARGET_DIR="$RUNS_DIR/$SELECTION"
+    execute_scripts_in_directory "$TARGET_DIR"
+}
+
+function copy_dotfiles {
+    echo "Verschiebe Dotfiles und Konfigurationsdateien..."
+
+    find "$ENV_DIR" -type f | while read -r file; do
     # Relativen Pfad zum ENV_DIR ermitteln
     rel_path="${file#"$ENV_DIR"/}"
     target="$HOME/$rel_path"
@@ -38,7 +55,18 @@ find "$ENV_DIR" -type f | while read -r file; do
         echo "Die Datei '$target' existiert bereits. Überspringe das Verschieben."
     fi
 done
+}
 
 
-echo "Alle Aufgaben abgeschlossen."
+function main {
+    if [ -n "$1" ]; then 
+        execute_scripts_in_selected_directory "$1"
+    else 
+        execute_all_scripts
+    fi
 
+    copy_dotfiles
+
+}
+
+main "$1"
