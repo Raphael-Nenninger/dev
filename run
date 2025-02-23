@@ -38,7 +38,7 @@ function execute_scripts_in_selected_directory {
 
 function copy_dotfiles {
     echo "Verschiebe Dotfiles und Konfigurationsdateien..."
-
+    local ENV_DIR="env"
     find "$ENV_DIR" -type f | while read -r file; do
     # Relativen Pfad zum ENV_DIR ermitteln
     rel_path="${file#"$ENV_DIR"/}"
