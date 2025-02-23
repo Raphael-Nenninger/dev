@@ -1,4 +1,4 @@
 #!/usr/bin/sh
 
 # Script um die basics zu installieren
-sudo apt install ripgrep fzf
+sudo apt install ripgrep fzf git

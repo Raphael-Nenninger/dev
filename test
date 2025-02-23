@@ -1,0 +1,47 @@
+#!/usr/bin/bash 
+
+function execute_scripts_in_directory {
+    local DIR="$1"
+    if [ -d "$DIR" ]; then
+        echo "Installiere Skripte in: $DIR"
+
+        # Alle ausführbaren Dateien im Verzeichnis finden und ausführen
+        for SCRIPT in "$DIR"/*; do
+            if [ -f "$SCRIPT" ] && [ -x "$SCRIPT" ]; then
+                echo "Starte: $SCRIPT"
+                "$SCRIPT"  # Skript ausführen
+            else
+                echo "Überspringe (nicht ausführbar): $SCRIPT"
+            fi
+        done
+    else
+        echo "Verzeichnis existiert nicht: $DIR"
+    fi
+}
+
+
+function execute_all_scripts {
+    local RUNS_DIR="runs"
+
+    for DIR in "RUNS_DIR"/*; do
+        execute_script_in_directory "$DIR"
+    done
+}
+
+function execute_scripts_in_selected_directory {
+    local RUNS_DIR="runs"
+    local SELECTION="$1"
+
+    local TARGET_DIR="$RUNS_DIR/$SELECTION"
+    execute_scripts_in_directory "$TARGET_DIR"
+}
+
+function main {
+    if [ -n "$1" ]; then 
+        execute_scripts_in_selected_directory "$1"
+    else 
+        execute_all_scripts
+    fi
+}
+
+main "$1"

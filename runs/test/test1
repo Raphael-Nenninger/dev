@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+echo "Wird dies ausgegeben."
+echo "Dies ist die Datei test 1"
+
+
