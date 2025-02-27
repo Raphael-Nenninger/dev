@@ -19,12 +19,11 @@ function execute_scripts_in_directory {
     fi
 }
 
-
 function execute_all_scripts {
     local RUNS_DIR="runs"
 
-    for DIR in "RUNS_DIR"/*; do
-        execute_script_in_directory "$DIR"
+    for DIR in "$RUNS_DIR"/*; do  # Korrektur: RUNS_DIR ohne Anführungszeichen um den Variablennamen
+        execute_scripts_in_directory "$DIR"  # Korrektur: richtiger Funktionsname
     done
 }
 
@@ -42,8 +41,7 @@ function main {
     else 
         execute_all_scripts
     fi
-
-    cp bin ~/
 }
 
 main "$1"
+
