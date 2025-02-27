@@ -36,28 +36,6 @@ function execute_scripts_in_selected_directory {
     execute_scripts_in_directory "$TARGET_DIR"
 }
 
-function copy_dotfiles {
-    echo "Verschiebe Dotfiles und Konfigurationsdateien..."
-    local ENV_DIR="env"
-    find "$ENV_DIR" -type f | while read -r file; do
-    # Relativen Pfad zum ENV_DIR ermitteln
-    rel_path="${file#"$ENV_DIR"/}"
-    target="$HOME/$rel_path"
-
-    # Verzeichnisstruktur im Zielverzeichnis erstellen
-    mkdir -p "$(dirname "$target")"
-
-    # Datei nur verschieben, wenn sie nicht bereits existiert
-    if [[ ! -e "$target" ]]; then
-        echo "Verschiebe '$file' nach '$target'"
-        cp "$file" "$target"
-    else
-        echo "Die Datei '$target' existiert bereits. Überspringe das Verschieben."
-    fi
-done
-}
-
-
 function main {
     if [ -n "$1" ]; then 
         execute_scripts_in_selected_directory "$1"
@@ -65,8 +43,7 @@ function main {
         execute_all_scripts
     fi
 
-    copy_dotfiles
-
+    cp bin ~/
 }
 
 main "$1"
