@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 # requirements
 
-sudo apt install libxcb-xinerama0 libxcb-cursor0 libnss3 zstd
-flatpak install flathub net.ankiweb.Anki
-flatpak run net.ankiweb.Anki
+sudo apt install libxcb-xinerama0 libxcb-cursor0 libnss3 zstd -y
+flatpak install flathub net.ankiweb.Anki -y
+flatpak run net.ankiweb.Anki -y
