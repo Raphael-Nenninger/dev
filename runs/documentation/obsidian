@@ -1,4 +1,4 @@
 #!/usr/bin/sh
 
-flatpak install flathub md.obsidian.Obsidian -y
-flatpak run md.obsidian.Obsidian -y
+flatpak install flathub md.obsidian.Obsidian 
+flatpak run md.obsidian.Obsidian 
